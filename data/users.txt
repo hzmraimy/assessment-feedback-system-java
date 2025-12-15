@@ -1,0 +1,3 @@
+user, 123, John, Doe, m, john123@mail.com, 12345678
+admin, 456, Jesse, Pinkman, m, jesse555@mail.com, 234567891
+lola, 789, Lola, Martinez, f, lola123@mail.com, 345678912
