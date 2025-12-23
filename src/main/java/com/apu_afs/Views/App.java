@@ -1,6 +1,8 @@
 package com.apu_afs.Views;
 
 import java.awt.Color;
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -17,6 +19,7 @@ public class App extends JFrame {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(true);
     this.setSize(App.frameWidth, App.frameHeight);
+    this.setExtendedState(JFrame.MAXIMIZED_VERT);
     this.setLocationRelativeTo(null);
     this.add(new Router(state));
     
@@ -24,5 +27,11 @@ public class App extends JFrame {
     this.setIconImage(ico.getImage());
     this.getContentPane().setBackground(new Color(0xcad5e2));
     this.setVisible(true);
+  }
+
+  public static ImageIcon iconResizer(ImageIcon icon, int width, int height) {
+    Image transformedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    ImageIcon newIcon = new ImageIcon(transformedImage);
+    return newIcon;
   }
 }
