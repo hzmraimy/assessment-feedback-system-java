@@ -7,4 +7,9 @@ public class Admin extends User {
   public Admin(ArrayList<String> props) {
     super(props);
   }
+
+  @Override
+  public void updateUser() {
+    super.updateUser();
+  }  
 }

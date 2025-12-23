@@ -3,17 +3,17 @@ package com.apu_afs.Models;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class User {
-  private String username;
-  private String password;
-  private String firstName;
-  private String lastName;
-  private char gender;
-  private String email;
-  private String phoneNumber;
-  private String role;
+public abstract class User {
+  String username;
+  String password;
+  String firstName;
+  String lastName;
+  char gender;
+  String email;
+  String phoneNumber;
+  String role;
 
-  private static final String filePath = "data/users.txt";
+  public static final String filePath = "data/users.txt";
 
   public User(ArrayList<String> props) {
     this.username = props.get(0);
@@ -26,22 +26,6 @@ public class User {
     this.role = props.get(7);
   }
 
-  public static boolean doesUserExists(String username) {
-    ArrayList<String> usersData = Data.fetch(User.filePath);
-
-    boolean isMatching = false;
-    for (String user : usersData) {
-      ArrayList<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
-      
-      isMatching = props.get(0).equals(username);
-      if (isMatching) {
-        break;
-      }
-    }
-
-    return isMatching;
-  }
-
   public static User userAuth(String username, String password) {
     ArrayList<String> usersData = Data.fetch(User.filePath);
 
@@ -49,7 +33,38 @@ public class User {
       ArrayList<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
 
       if (props.get(0).equals(username) && props.get(1).equals(password)) {
-        return new User(props);
+
+        if (props.get(7).equals("admin")) {
+          return new Admin(props);
+        } else if (props.get(7).equals("academic")) {
+          return new AcademicLeader(props);
+        } else if (props.get(7).equals("lecturer")) {
+          return new Lecturer(props);
+        } else {
+          return new Student(props);
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public static User getUserByUsername(String username) {
+    ArrayList<String> usersData = Data.fetch(User.filePath);
+
+    for (String user : usersData) {
+      ArrayList<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
+      
+      if (props.get(0).equals(username)) {
+        if (props.get(7).equals("admin")) {
+          return new Admin(props);
+        } else if (props.get(7).equals("academic")) {
+          return new AcademicLeader(props);
+        } else if (props.get(7).equals("lecturer")) {
+          return new Lecturer(props);
+        } else {
+          return new Student(props);
+        }
       }
     }
 
@@ -57,67 +72,75 @@ public class User {
   }
 
   public String getUsername() {
-    return username;
+    return this.username;
   }
   
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
   public char getGender() {
-    return gender;
+    return this.gender;
   }
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   public String getPhoneNumber() {
-    return phoneNumber;
+    return this.phoneNumber;
   }
 
   public String getRole() {
-    return role;
+    return this.role;
   }
 
   public void setUsername(String username) {
     this.username = username;
+    updateUser();
   }
 
   public void setPassword(String password) {
     this.password = password;
+    updateUser();
   }
 
   public void setFirstName(String firstName) {
     this.firstName = firstName;
+    updateUser();
   }
   
   public void setLastName(String lastName) {
     this.lastName = lastName;
+    updateUser();
   }
 
   public void setGender(char gender) {
     this.gender = gender;
+    updateUser();
   }
 
   public void setEmail(String email) {
     this.email = email;
+    updateUser();
   }
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+    updateUser();
   }
 
   public void setRole(String role) {
     this.role = role;
+    updateUser();
   }
 
   public void updateUser() {

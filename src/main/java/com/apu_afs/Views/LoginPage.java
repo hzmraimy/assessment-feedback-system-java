@@ -1,30 +1,31 @@
 package com.apu_afs.Views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.awt.GridLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.apu_afs.GlobalState;
+
 public class LoginPage extends JPanel {
-
-  JLabel header;
-  JButton dashboardBtn;
+  JPanel imageContainer;
+  JPanel formContainer;
   
-  public LoginPage(Router router) {
-    header = new JLabel();
-    header.setText("This is the Login Page");
+  public LoginPage(Router router, GlobalState state) {
+    super(new GridLayout(1, 2));
 
-    dashboardBtn = new JButton();
-    dashboardBtn.setText("Go to Dashboard");
-    dashboardBtn.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        router.showView("dashboard");
-      }
-    });
+    ImageIcon backgroundImage = new ImageIcon("assets/apu-background-dimmed.png");
+    JLabel imageLabel = new JLabel();
+    imageLabel.setIcon(backgroundImage);
+
+    imageContainer = new JPanel();
+    imageContainer.add(imageLabel);
     
-    this.add(header);
-    this.add(dashboardBtn);
+    formContainer = new JPanel();
+    
+    this.add(imageContainer);
+    this.add(formContainer);
   }
 }

@@ -6,12 +6,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.apu_afs.GlobalState;
+
 public class DashboardPage extends JPanel {
 
   JLabel header;
   JButton loginbtn;
   
-  public DashboardPage(Router router) {
+  public DashboardPage(Router router, GlobalState state) {
     header = new JLabel();
     header.setText("This is the Dashboard Page");
 
@@ -20,7 +22,7 @@ public class DashboardPage extends JPanel {
     loginbtn.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        router.showView("login");
+        router.showView("login", state);
       }
     });
     

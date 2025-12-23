@@ -1,22 +1,29 @@
 package com.apu_afs.Views;
 
 import javax.swing.JPanel;
-import java.awt.*;
+import com.apu_afs.GlobalState;
 
 public class Router extends JPanel {
-  private CardLayout cardLayout;
 
-  public Router() {
-    cardLayout = new CardLayout();
-    this.setLayout(cardLayout);
+  public Router(GlobalState state) {
 
-    this.add(new LoginPage(this), "login");
-    this.add(new DashboardPage(this), "dashboard");
+    this.showView("login", state);
+  }
+  
+  public void showView(String page, GlobalState state) {
+    this.removeAll();
 
-    this.showView("login");
+    this.add(this.createPanel(page, state));
+
+    revalidate();
+    repaint();
   }
 
-  public void showView(String page) {
-    cardLayout.show(this, page);
+  private JPanel createPanel(String page, GlobalState state) {
+    switch (page) {
+      case "login": return new LoginPage(this, state);
+      case "dashboard": return new DashboardPage(this, state);
+      default: return new DashboardPage(this, state);
+    }
   }
 }

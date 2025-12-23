@@ -7,4 +7,9 @@ public class Student extends User {
   public Student(ArrayList<String> props) {
     super(props);
   }
+
+  @Override
+  public void updateUser() {
+    super.updateUser();
+  }  
 }
