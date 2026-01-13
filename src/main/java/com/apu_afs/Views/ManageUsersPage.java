@@ -1,27 +1,24 @@
 package com.apu_afs.Views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.apu_afs.GlobalState;
-import com.apu_afs.Views.components.*;
+import com.apu_afs.Views.components.HeaderPanel;
+import com.apu_afs.Views.components.NavPanel;
 
 import net.miginfocom.swing.MigLayout;
 
-public class DashboardPage extends JPanel {
+public class ManageUsersPage extends JPanel {
 
   HeaderPanel header;
   NavPanel nav;
 
   JPanel contentBody;
+  JPanel searchBar;
   
-  public DashboardPage(Router router, GlobalState state) {
+  public ManageUsersPage(Router router, GlobalState state) {
     super(new MigLayout(
       "fill, insets 0, gap 0",  
         "[][][grow]",              
@@ -42,7 +39,7 @@ public class DashboardPage extends JPanel {
     contentBody.setBackground(App.slate100);
 
     JLabel temp = new JLabel();
-    temp.setText("this is dashboard page" + router.getCurrPage().getDisplay());
+    temp.setText("this is manage users page" + router.getCurrPage().getDisplay());
     contentBody.add(temp);
     
     this.add(header, "span, growx, wrap");

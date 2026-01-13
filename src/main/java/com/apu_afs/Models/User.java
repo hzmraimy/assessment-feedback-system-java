@@ -3,6 +3,8 @@ package com.apu_afs.Models;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.apu_afs.Views.Pages;
+
 public abstract class User {
   String username;
   String password;
@@ -13,17 +15,22 @@ public abstract class User {
   String phoneNumber;
   String role;
 
+  ArrayList<NavOption> navOptions;
+
   public static final String filePath = "data/users.txt";
 
   public User(ArrayList<String> props) {
-    this.username = props.get(0);
-    this.password = props.get(1);
-    this.firstName = props.get(2);
-    this.lastName = props.get(3);
-    this.gender = props.get(4).charAt(0);
-    this.email = props.get(5);
-    this.phoneNumber = props.get(6);
-    this.role = props.get(7);
+    this.username = props.get(0).trim();
+    this.password = props.get(1).trim();
+    this.firstName = props.get(2).trim();
+    this.lastName = props.get(3).trim();
+    this.gender = props.get(4).trim().charAt(0);
+    this.email = props.get(5).trim();
+    this.phoneNumber = props.get(6).trim();
+    this.role = props.get(7).trim();
+    this.navOptions = new ArrayList<NavOption>(Arrays.asList(
+      new NavOption(Pages.DASHBOARD)
+    ));
   }
 
   public static User userAuth(String username, String password) {
@@ -32,13 +39,12 @@ public abstract class User {
     for (String user : usersData) {
       ArrayList<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
 
-      if (props.get(0).equals(username) && props.get(1).equals(password)) {
-
-        if (props.get(7).equals("admin")) {
+      if (props.get(0).trim().equals(username) && props.get(1).trim().equals(password)) {
+        if (props.get(7).trim().equals("admin")) {
           return new Admin(props);
-        } else if (props.get(7).equals("academic")) {
+        } else if (props.get(7).trim().equals("academic")) {
           return new AcademicLeader(props);
-        } else if (props.get(7).equals("lecturer")) {
+        } else if (props.get(7).trim().equals("lecturer")) {
           return new Lecturer(props);
         } else {
           return new Student(props);
@@ -55,12 +61,12 @@ public abstract class User {
     for (String user : usersData) {
       ArrayList<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
       
-      if (props.get(0).equals(username)) {
-        if (props.get(7).equals("admin")) {
+      if (props.get(0).trim().equals(username)) {
+        if (props.get(7).trim().equals("admin")) {
           return new Admin(props);
-        } else if (props.get(7).equals("academic")) {
+        } else if (props.get(7).trim().equals("academic")) {
           return new AcademicLeader(props);
-        } else if (props.get(7).equals("lecturer")) {
+        } else if (props.get(7).trim().equals("lecturer")) {
           return new Lecturer(props);
         } else {
           return new Student(props);
@@ -101,6 +107,10 @@ public abstract class User {
 
   public String getRole() {
     return this.role;
+  }
+
+  public ArrayList<NavOption> getNavOptions() {
+    return navOptions;
   }
 
   public void setUsername(String username) {
@@ -147,7 +157,7 @@ public abstract class User {
     ArrayList<String> usersData = Data.fetch(User.filePath);
     ArrayList<String> updatedUsersData = usersData.stream().filter((userRow) -> {
       ArrayList<String> props = new ArrayList<String>(Arrays.asList(userRow.split(", ")));
-      return !props.get(0).equals(this.username);
+      return !props.get(0).trim().equals(this.username);
     }).collect(Collectors.toCollection(ArrayList::new));
 
     ArrayList<String> updatedUserProps = new ArrayList<String>();
@@ -162,5 +172,18 @@ public abstract class User {
 
     updatedUsersData.add(String.join(", ", updatedUserProps));
     Data.save(User.filePath, String.join("\n", updatedUsersData));
+  }
+
+  // use for debugging remove in production
+  public void debug() {
+    System.out.println("User: ");
+    System.out.println("Username: " + this.username);
+    System.out.println("Password: " + this.password);
+    System.out.println("First Name: " + this.firstName);
+    System.out.println("Last Name: " + this.lastName);
+    System.out.println("Gender: " + this.gender);
+    System.out.println("Email: " + this.email);
+    System.out.println("Phone Number: " + this.phoneNumber);
+    System.out.println("Role: " + this.role);
   }
 }

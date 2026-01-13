@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,11 +26,20 @@ public class HeaderPanel extends JPanel {
   JLabel titleFeedbackLabel;
   JLabel titleSystemLabel;
   JLabel currPageLabel;
+
+  JPanel headerProfileSection;
+  JPanel profileUsernameContainer;
+  JLabel profileImageLabel;
+  JLabel profileUsernameLabel;
+  JLabel profileRoleLabel;
+  JPanel editProfileContainer;
+  JButton editProfileBtn;
+  
   
   public HeaderPanel(Router router, GlobalState state) {
-    super(new MigLayout());
+    super(new MigLayout("insets 5 10, fill"));
     this.setBackground(App.slate900);
-    this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+    this.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
     headerImageLabel = new JLabel();
     headerImageLabel.setBackground(App.slate100);
@@ -52,7 +62,7 @@ public class HeaderPanel extends JPanel {
     titleContainer.add(titleSystemLabel);
 
     currPageLabel = new JLabel();
-    currPageLabel.setText(" | " + "Dashboard");
+    currPageLabel.setText(" | " + router.getCurrPage().getDisplay());
     currPageLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 42));
     currPageLabel.setForeground(App.slate100);
 
@@ -62,6 +72,43 @@ public class HeaderPanel extends JPanel {
     headerTitleSection.add(titleContainer);
     headerTitleSection.add(currPageLabel);
 
-    this.add(headerTitleSection, BorderLayout.WEST);
+    profileImageLabel = new JLabel();
+    profileImageLabel.setIcon(App.iconResizer(new ImageIcon("assets/header-profile-icon.png"), 24, 24));
+    
+    profileUsernameLabel = new JLabel();
+    profileUsernameLabel.setText(state.getCurrUser().getUsername());
+    profileUsernameLabel.setForeground(App.slate100);
+    profileUsernameLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+
+    profileUsernameContainer = new JPanel(new MigLayout("insets 0"));
+    profileUsernameContainer.setBackground(App.slate900);
+    profileUsernameContainer.add(profileImageLabel);
+    profileUsernameContainer.add(profileUsernameLabel);
+
+    profileRoleLabel = new JLabel();
+    profileRoleLabel.setLayout(new MigLayout("insets 0"));
+    profileRoleLabel.setText(
+      state.getCurrUser().getFirstName() + " " + state.getCurrUser().getLastName() + ", " + state.getCurrUser().getRole().substring(0, 1).toUpperCase() + state.getCurrUser().getRole().substring(1)
+    );
+    profileRoleLabel.setForeground(App.slate100);
+    
+    editProfileBtn = new JButton();
+    editProfileBtn.setText("Edit Profile");
+    editProfileBtn.setBackground(App.slate100);
+    editProfileBtn.setForeground(App.slate900);
+    editProfileBtn.setBorder(BorderFactory.createCompoundBorder(editProfileBtn.getBorder(), BorderFactory.createEmptyBorder(1, 2, 1, 2)));
+    
+    editProfileContainer = new JPanel(new MigLayout("insets 0"));
+    editProfileContainer.setBackground(App.slate900);
+    editProfileContainer.add(editProfileBtn, "align right");
+
+    headerProfileSection = new JPanel(new MigLayout("insets 0, wrap 1, fillx"));
+    headerProfileSection.setBackground(App.slate900);
+    headerProfileSection.add(profileUsernameContainer, "growx");
+    headerProfileSection.add(profileRoleLabel, "growx");
+    headerProfileSection.add(editProfileContainer, "growx");
+
+    this.add(headerTitleSection);
+    this.add(headerProfileSection, "align right");
   }
 }

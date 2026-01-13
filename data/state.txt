@@ -1,1 +1,1 @@
-guest, false
+admin, true
