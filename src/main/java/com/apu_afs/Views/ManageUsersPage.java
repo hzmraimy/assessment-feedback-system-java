@@ -197,16 +197,16 @@ public class ManageUsersPage extends JPanel {
 
     // Style the table header
     JTableHeader tableHeader = table.getTableHeader();
-    tableHeader.setBackground(new Color(51, 65, 85)); // Darker contrasting color
+    tableHeader.setBackground(new Color(51, 65, 85));
     tableHeader.setForeground(Color.WHITE);
-    tableHeader.setFont(new Font("SansSerif", Font.BOLD, 14));
+    tableHeader.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
     tableHeader.setPreferredSize(new Dimension(tableHeader.getPreferredSize().width, 45));
 
     // Style the table cells
     table.setBackground(Color.WHITE);
     table.setForeground(Color.BLACK);
-    table.setFont(new Font("SansSerif", Font.PLAIN, 13));
-    table.setGridColor(new Color(226, 232, 240)); // Light gray grid lines
+    table.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 13));
+    table.setGridColor(new Color(226, 232, 240));
     table.setShowGrid(true);
     table.setIntercellSpacing(new Dimension(1, 1));
 
@@ -220,7 +220,7 @@ public class ManageUsersPage extends JPanel {
             
             if (c instanceof JLabel) {
                 JLabel label = (JLabel) c;
-                label.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12)); // Padding
+                label.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
             }
             
             // Alternate row colors
@@ -228,7 +228,7 @@ public class ManageUsersPage extends JPanel {
                 if (row % 2 == 0) {
                     c.setBackground(Color.WHITE);
                 } else {
-                    c.setBackground(new Color(248, 250, 252)); // Very light gray
+                    c.setBackground(new Color(248, 250, 252));
                 }
             }
             

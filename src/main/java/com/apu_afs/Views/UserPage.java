@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -35,11 +36,49 @@ public class UserPage extends JPanel {
   NavPanel nav;
 
   JPanel contentBody;
+
+  JLabel formTitle;
+
+  JPanel idRow;
+  JPanel idFieldGroup;
+  JLabel idLabel;
+  TextField idField;
+
+  JPanel usernamePasswordRow;
+  JPanel usernameFieldGroup;
+  JLabel usernameLabel;
+  TextField usernameField;
+  JLabel usernameErrorLabel;
+  JPanel passwordFieldGroup;
+  JLabel passwordLabel;
+  TextField passwordField;
+  JLabel passwordErrorLabel;
+
+  JPanel firstLastNameRow;
+  JPanel firstNameFieldGroup;
+  JLabel firstNameLabel;
+  TextField firstNamField;
+  JLabel firstNameErrorLabel;
+  JPanel lastNameFieldGroup;
+  JLabel lastNameLabel;
+  TextField lastNameField;
+  JLabel lastNameErrorLabel;
+
+  JPanel genderEmailRow;
+  JPanel genderFieldGroup;
+  JLabel genderLabel;
+  JComboBox<String> gender;
+  JLabel genderErrorLabel;
+  JPanel emailFieldGroup;
+  JLabel emailLabel;
+  TextField emailField;
+  JLabel emailErrorLabel;
+  
  
   private static final String[] allowedRoles = {"admin"};
   private static final String dataContext = "User";
   
-  public UserPage(Router router, GlobalState state, User selectedUser) {
+  public UserPage(Router router, GlobalState state, String selectedUserID) {
     super(new MigLayout(
       "fill, insets 0, gap 0",  
         "[][][grow]",              

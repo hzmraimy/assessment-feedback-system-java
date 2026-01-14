@@ -22,7 +22,7 @@ public class GlobalState {
       this.staySignedIn = false;
     }
 
-    this.currUser = User.getUserByUsername(stateDataProps.get(0).trim());
+    this.currUser = User.getUserByID(stateDataProps.get(0).trim());
     this.staySignedIn = Boolean.parseBoolean(stateDataProps.get(1).trim());
   }
 

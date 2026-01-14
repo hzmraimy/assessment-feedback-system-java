@@ -1,7 +1,6 @@
 package com.apu_afs.Models;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.apu_afs.Views.Pages;
@@ -58,13 +57,13 @@ public abstract class User {
     return null;
   }
 
-  public static User getUserByUsername(String username) {
+  public static User getUserByID(String id) {
     List<String> usersData = Data.fetch(User.filePath);
 
     for (String user : usersData) {
       List<String> props = new ArrayList<String>(Arrays.asList(user.split(", ")));
       
-      if (props.get(1).trim().equals(username)) {
+      if (props.get(0).trim().equals(id)) {
         if (props.get(8).trim().equals("admin")) {
           return new Admin(props);
         } else if (props.get(8).trim().equals("academic")) {
@@ -211,6 +210,7 @@ public abstract class User {
   // use for debugging remove in production
   public void debug() {
     System.out.println("User: ");
+    System.out.println("ID: " + this.ID);
     System.out.println("Username: " + this.username);
     System.out.println("Password: " + this.password);
     System.out.println("First Name: " + this.firstName);

@@ -10,8 +10,8 @@ import java.util.List;
 public class UserTableModel extends AbstractTableModel {
     private List<User> users;
     private final String[] columnNames = {
-        "Username", "Password", "First Name", "Last Name", "Gender", 
-        "Email", "Phone Number", "Role"
+        "ID", "Username", "Password", "First Name", "Last Name", 
+        "Gender", "Email", "Phone Number", "Role"
     };
 
     public UserTableModel(List<User> users) {
@@ -37,14 +37,15 @@ public class UserTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         User user = users.get(rowIndex);
         switch (columnIndex) {
-            case 0: return user.getUsername();
-            case 1: return user.getPassword();
-            case 2: return user.getFirstName();
-            case 3: return user.getLastName();
-            case 4: return user.getGender() == 'm' ? "Male" : "Female";
-            case 5: return user.getEmail();
-            case 6: return user.getPhoneNumber();
-            case 7: return user.getRole();
+            case 0: return user.getID();
+            case 1: return user.getUsername();
+            case 2: return user.getPassword();
+            case 3: return user.getFirstName();
+            case 4: return user.getLastName();
+            case 5: return user.getGender() == 'm' ? "Male" : "Female";
+            case 6: return user.getEmail();
+            case 7: return user.getPhoneNumber();
+            case 8: return user.getRole();
             default: return null;
         }
     }
