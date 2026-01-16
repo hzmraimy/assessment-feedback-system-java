@@ -175,7 +175,7 @@ public class ManageUsersPage extends JPanel {
             state.setSelectedUserID(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
             router.showView(Pages.USER, state);
         } else {
-            JOptionPane.showMessageDialog(router, "No user has been selected, cannot edit user!", "Errpr: Edit Selected User", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(router, "No user has been selected, cannot edit user!", "Error: Edit Selected User", JOptionPane.ERROR_MESSAGE);
         }
     });
 

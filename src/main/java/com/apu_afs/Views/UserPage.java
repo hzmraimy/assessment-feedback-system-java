@@ -135,7 +135,7 @@ public class UserPage extends JPanel {
     contentBody.setBackground(App.slate100);
 
     formTitle = new JLabel();
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       formTitle.setText("Editing User ID: " + editingUser.getID());
     } else {
       formTitle.setText("Create New User Form");
@@ -148,7 +148,7 @@ public class UserPage extends JPanel {
     usernameField.setBackground(App.slate200);
     usernameField.setBorder(BorderFactory.createCompoundBorder(usernameField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     usernameField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       usernameField.setText(editingUser.getUsername());
     }
     usernameErrorLabel = new JLabel();
@@ -164,7 +164,7 @@ public class UserPage extends JPanel {
     passwordField.setBackground(App.slate200);
     passwordField.setBorder(BorderFactory.createCompoundBorder(passwordField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     passwordField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       passwordField.setText(editingUser.getPassword());
     }
     passwordErrorLabel = new JLabel();
@@ -180,7 +180,7 @@ public class UserPage extends JPanel {
     firstNameField.setBackground(App.slate200);
     firstNameField.setBorder(BorderFactory.createCompoundBorder(firstNameField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     firstNameField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       firstNameField.setText(editingUser.getFirstName());
     }
     firstNameErrorLabel = new JLabel();
@@ -196,7 +196,7 @@ public class UserPage extends JPanel {
     lastNameField.setBackground(App.slate200);
     lastNameField.setBorder(BorderFactory.createCompoundBorder(lastNameField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     lastNameField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       lastNameField.setText(editingUser.getLastName());
     }
     lastNameErrorLabel = new JLabel();
@@ -212,7 +212,7 @@ public class UserPage extends JPanel {
     genderComboBox.setBackground(App.slate200);
     genderComboBox.setBorder(BorderFactory.createCompoundBorder(genderComboBox.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     genderComboBox.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       genderComboBox.setSelectedIndex(editingUser.getGender() == 'm' ? 0 : 1);
     }
     genderErrorLabel = new JLabel();
@@ -228,7 +228,7 @@ public class UserPage extends JPanel {
     emailField.setBackground(App.slate200);
     emailField.setBorder(BorderFactory.createCompoundBorder(emailField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     emailField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       emailField.setText(editingUser.getEmail());
     }
     emailErrorLabel = new JLabel();
@@ -244,7 +244,7 @@ public class UserPage extends JPanel {
     phoneNumberField.setBackground(App.slate200);
     phoneNumberField.setBorder(BorderFactory.createCompoundBorder(phoneNumberField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     phoneNumberField.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       phoneNumberField.setText(editingUser.getPhoneNumber());
     }
     phoneNumberErrorLabel = new JLabel();
@@ -260,7 +260,7 @@ public class UserPage extends JPanel {
     roleComboBox.setBackground(App.slate200);
     roleComboBox.setBorder(BorderFactory.createCompoundBorder(roleComboBox.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     roleComboBox.setPreferredSize(new Dimension(600, 35));
-    if (actionContext == "edit") {
+    if (actionContext.equals("edit")) {
       if (editingUser.getRole().equals("admin")) {
         roleComboBox.setSelectedIndex(0);
       } else if (editingUser.getRole().equals("academic")) {
@@ -276,8 +276,7 @@ public class UserPage extends JPanel {
     roleFieldGroup = new JPanel(new MigLayout("insets 0, wrap 1, gap 5"));
     roleFieldGroup.add(roleLabel);
     roleFieldGroup.add(roleComboBox);
-    roleFieldGroup.add(roleErrorLabel);
-    
+    roleFieldGroup.add(roleErrorLabel); 
 
     usernamePasswordRow = new JPanel(new MigLayout("insets 0, aligny center, gapx 100"));
     usernamePasswordRow.add(usernameFieldGroup);
@@ -305,10 +304,37 @@ public class UserPage extends JPanel {
     formTabbedPane = new JTabbedPane();
     formTabbedPane.addTab("User Information", mainform);
 
+    submitBtn = new JButton();
+    submitBtn.setText("Submit");
+    submitBtn.setForeground(Color.WHITE);
+    submitBtn.setBackground(App.green600);
+    submitBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+    submitBtn.setBorder(BorderFactory.createCompoundBorder(submitBtn.getBorder(), BorderFactory.createEmptyBorder(5, 6, 5, 6)));
+    submitBtn.setFocusable(false);
+    submitBtn.addActionListener(e -> {
+
+    });
+
+    deleteBtn = new JButton();
+    deleteBtn.setText("Delete User");
+    deleteBtn.setForeground(Color.WHITE);
+    deleteBtn.setBackground(App.red600);
+    deleteBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+    deleteBtn.setBorder(BorderFactory.createCompoundBorder(deleteBtn.getBorder(), BorderFactory.createEmptyBorder(5, 6, 5, 6)));
+    deleteBtn.setFocusable(false);
+    deleteBtn.addActionListener(e -> {
+      
+    });
+
+    actionButtonGroup = new JPanel(new MigLayout("insets 50 0, aligny center"));
+    if (actionContext.equals("edit")) {
+      actionButtonGroup.add(deleteBtn);
+    }
+    actionButtonGroup.add(submitBtn, "push, alignx right");
+
     contentBody.add(formTitle);
     contentBody.add(formTabbedPane, "width 100%");
-
-    
+    contentBody.add(actionButtonGroup, "width 100%");
     
     this.add(header, "span, growx, wrap");
     this.add(nav, "growy");
