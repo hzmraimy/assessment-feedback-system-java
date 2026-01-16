@@ -30,6 +30,9 @@ public class Main {
             UIManager.put( "ProgressBar.arc", 12 );
             UIManager.put( "TextComponent.arc", 12 );
 
+            // ComboBox button background
+            UIManager.put("ComboBox.buttonBackground", App.slate200);
+
             new App(new GlobalState());
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize FlatLaf" );

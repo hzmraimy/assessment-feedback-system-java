@@ -3,7 +3,8 @@ package com.apu_afs.Views;
 public enum Pages {
   LOGIN("Login"), 
   DASHBOARD("Dashboard"),
-  MANAGEUSERS("Manage Users");
+  MANAGEUSERS("Manage Users"),
+  USER("User Form");
 
   private final String display;
 

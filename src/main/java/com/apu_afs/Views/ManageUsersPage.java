@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
@@ -155,6 +158,9 @@ public class ManageUsersPage extends JPanel {
     addBtn.setBackground(App.green600);
     addBtn.setFocusable(false);
     addBtn.setBorder(BorderFactory.createCompoundBorder(addBtn.getBorder(), BorderFactory.createEmptyBorder(5, 6, 5, 6)));
+    addBtn.addActionListener(e -> {
+        router.showView(Pages.USER, state);
+    });
 
     editBtn = new JButton();
     editBtn.setText("Edit Selected " + dataContext.substring(0, dataContext.length() - 1));
@@ -164,6 +170,14 @@ public class ManageUsersPage extends JPanel {
     editBtn.setBackground(App.orange600);
     editBtn.setFocusable(false);
     editBtn.setBorder(BorderFactory.createCompoundBorder(editBtn.getBorder(), BorderFactory.createEmptyBorder(5, 6, 5, 6)));
+    editBtn.addActionListener(e -> {
+        if (table.getSelectedRow() != -1) {
+            state.setSelectedUserID(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
+            router.showView(Pages.USER, state);
+        } else {
+            JOptionPane.showMessageDialog(router, "No user has been selected, cannot edit user!", "Errpr: Edit Selected User", JOptionPane.ERROR_MESSAGE);
+        }
+    });
 
     actionBtnsContainer = new JPanel(new MigLayout("insets 0, gapx 5"));
     actionBtnsContainer.setBackground(App.slate100);
@@ -186,6 +200,7 @@ public class ManageUsersPage extends JPanel {
     rowCountLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 
     table = new JTable(userTableModel);
+    table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(), 800));
     // Wrap the table in a JScrollPane to show column headers
     JScrollPane scrollPane = new JScrollPane(table);
     scrollPane.setBackground(App.slate100);

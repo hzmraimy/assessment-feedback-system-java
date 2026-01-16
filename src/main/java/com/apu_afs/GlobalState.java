@@ -8,8 +8,13 @@ import com.apu_afs.Models.Data;
 import com.apu_afs.Models.User;
 
 public class GlobalState {
+  // need to save for persistent use
   private User currUser; // nullable must check before using
   private boolean staySignedIn;
+  
+  // use for user form Pages.USER when editing selected users form Pages.MANAGEUSERS
+  // no need to save this variable for persistent use
+  private String selectedUserID;
 
   private static final String filepath = "data/state.txt";
 
@@ -34,6 +39,10 @@ public class GlobalState {
     return this.staySignedIn;
   }
 
+  public String getSelectedUserID() {
+    return this.selectedUserID;
+  }
+
   public void setCurrUser(User currUser) {
     this.currUser = currUser;
     saveState();
@@ -42,6 +51,10 @@ public class GlobalState {
   public void setStaySignedIn(boolean staySignedIn) {
     this.staySignedIn = staySignedIn;
     saveState();
+  }
+
+  public void setSelectedUserID(String selectedUserID) {
+    this.selectedUserID = selectedUserID;
   }
 
   public void saveState() {
