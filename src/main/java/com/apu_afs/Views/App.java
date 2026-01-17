@@ -33,6 +33,9 @@ public class App extends JFrame {
   public static final Color green600 = new Color(0x00a63e);
 
   public static final Color red600 = new Color(0xe7000b);
+  public static final Color red200 = new Color(0xffc9c9);
+  public static final Color red100 = new Color(0xffe2e2);
+
 
   public static final Color orange600 = new Color(0xe17100);
   
@@ -49,11 +52,5 @@ public class App extends JFrame {
     this.setIconImage(ico.getImage());
     this.getContentPane().setBackground(new Color(0xcad5e2));
     this.setVisible(true);
-  }
-
-  public static ImageIcon iconResizer(ImageIcon icon, int width, int height) {
-    Image transformedImage = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    ImageIcon newIcon = new ImageIcon(transformedImage);
-    return newIcon;
   }
 }

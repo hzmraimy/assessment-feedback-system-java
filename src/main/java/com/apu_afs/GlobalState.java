@@ -8,13 +8,18 @@ import com.apu_afs.Models.Data;
 import com.apu_afs.Models.User;
 
 public class GlobalState {
-  // need to save for persistent use
+  // Persistent State
   private User currUser; // nullable must check before using
   private boolean staySignedIn;
   
+  // Volatile State 
   // use for user form Pages.USER when editing selected users form Pages.MANAGEUSERS
   // no need to save this variable for persistent use
   private String selectedUserID;
+
+  // use for searching and filtering
+  private String userSearch;
+  private List<String> userRoleConditions;
 
   private static final String filepath = "data/state.txt";
 
@@ -27,7 +32,7 @@ public class GlobalState {
       this.staySignedIn = false;
     }
 
-    this.currUser = User.getUserByID(stateDataProps.get(0).trim());
+    this.currUser = User.getUserByMatchingValues("id", stateDataProps.get(0).trim());
     this.staySignedIn = Boolean.parseBoolean(stateDataProps.get(1).trim());
   }
 
@@ -41,6 +46,14 @@ public class GlobalState {
 
   public String getSelectedUserID() {
     return this.selectedUserID;
+  }
+
+  public String getUserSearch() {
+    return this.userSearch;
+  }
+
+  public List<String> getUserRoleConditions() {
+    return this.userRoleConditions;
   }
 
   public void setCurrUser(User currUser) {
@@ -57,11 +70,35 @@ public class GlobalState {
     this.selectedUserID = selectedUserID;
   }
 
+  public void setUserSearch(String userSearch) {
+    this.userSearch = userSearch;
+  }
+
+  public void setUserRoleConditions(List<String> userRoleConditions) {
+    this.userRoleConditions = userRoleConditions;
+  }
+
   public void saveState() {
     List<String> updatedState = new ArrayList<>();
     updatedState.add(this.currUser == null ? "guest" : this.currUser.getUsername());
     updatedState.add(String.valueOf(this.staySignedIn));
 
     Data.save(filepath, String.join(", ", updatedState));
+  }
+
+  // When reaching new page after using state value remember to clear except login sessions
+  public void clearState() {
+    this.setSelectedUserID(null);
+    this.setUserSearch(null);
+    this.setUserRoleConditions(null);
+  }
+
+  // When user logout reset all state including login sessions
+  public void hardResetState() {
+    this.setCurrUser(null);
+    this.setStaySignedIn(false);
+    this.setSelectedUserID(null);
+    this.setUserSearch(null);
+    this.setUserRoleConditions(null);
   }
 }

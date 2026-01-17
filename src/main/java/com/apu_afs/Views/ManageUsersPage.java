@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
 import com.apu_afs.GlobalState;
+import com.apu_afs.Helper;
 import com.apu_afs.Models.User;
 import com.apu_afs.TableModels.UserTableModel;
 import com.apu_afs.Views.components.HeaderPanel;
@@ -64,6 +66,8 @@ public class ManageUsersPage extends JPanel {
 
   List<User> users;
   UserTableModel userTableModel;
+
+  String searchInput;
   List<String> roleConditions;
  
   private static final String[] allowedRoles = {"admin"};
@@ -93,14 +97,20 @@ public class ManageUsersPage extends JPanel {
     contentBody = new JPanel(new MigLayout("insets 20 20, wrap 1, gapy 10"));
     contentBody.setBackground(App.slate100);
 
+    searchInput = state.getUserSearch() != null ? state.getUserSearch() : "";
+    roleConditions = state.getUserRoleConditions() != null ? state.getUserRoleConditions() : User.roleOptions.keySet().stream().collect(Collectors.toList());
+
     searchField = new TextField("Search " + dataContext + "...");
+    if (!searchInput.isEmpty()) {
+        searchField.setText(searchInput);
+    }
     searchField.setBackground(App.slate200);
     searchField.setBorder(BorderFactory.createCompoundBorder(searchField.getBorder(), BorderFactory.createEmptyBorder(10, 15, 10, 15)));
     searchField.setPreferredSize(new Dimension(250, 35));
 
     searchClearBtn = new JButton();
     searchClearBtn.setText("Clear");
-    searchClearBtn.setIcon(App.iconResizer(new ImageIcon("assets/cancel-icon.png"), 18, 18));
+    searchClearBtn.setIcon(Helper.iconResizer(new ImageIcon("assets/cancel-icon.png"), 18, 18));
     searchClearBtn.setForeground(Color.WHITE);
     searchClearBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
     searchClearBtn.setBackground(App.red600);
@@ -109,7 +119,7 @@ public class ManageUsersPage extends JPanel {
 
     searchBtn = new JButton();
     searchBtn.setText("Search");
-    searchBtn.setIcon(App.iconResizer(new ImageIcon("assets/search-icon.png"), 18, 18));
+    searchBtn.setIcon(Helper.iconResizer(new ImageIcon("assets/search-icon.png"), 18, 18));
     searchBtn.setForeground(Color.WHITE);
     searchBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
     searchBtn.setBackground(App.blue600);
@@ -124,19 +134,19 @@ public class ManageUsersPage extends JPanel {
 
     filterAdminCheckButton = new JCheckBox();
     filterAdminCheckButton.setText("Admin");
-    filterAdminCheckButton.setSelected(true);
+    filterAdminCheckButton.setSelected(roleConditions.contains("admin"));
 
     filterAcademicCheckButton = new JCheckBox();
     filterAcademicCheckButton.setText("Academic Leader");
-    filterAcademicCheckButton.setSelected(true);
+    filterAcademicCheckButton.setSelected(roleConditions.contains("academic"));
 
     filterLecturerCheckButton = new JCheckBox();
     filterLecturerCheckButton.setText("Lecturer");
-    filterLecturerCheckButton.setSelected(true);
+    filterLecturerCheckButton.setSelected(roleConditions.contains("lecturer"));
 
     filterStudentCheckButton = new JCheckBox();
     filterStudentCheckButton.setText("Student");
-    filterStudentCheckButton.setSelected(true);
+    filterStudentCheckButton.setSelected(roleConditions.contains("student"));
 
     filterOptionsContainer = new JPanel(new MigLayout("insets 0, gapx 5"));
     filterOptionsContainer.setBackground(App.slate100);
@@ -152,7 +162,7 @@ public class ManageUsersPage extends JPanel {
 
     addBtn = new JButton();
     addBtn.setText("Add " + dataContext);
-    addBtn.setIcon(App.iconResizer(new ImageIcon("assets/add-icon.png"), 18, 18));
+    addBtn.setIcon(Helper.iconResizer(new ImageIcon("assets/add-icon.png"), 18, 18));
     addBtn.setForeground(Color.WHITE);
     addBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
     addBtn.setBackground(App.green600);
@@ -164,7 +174,7 @@ public class ManageUsersPage extends JPanel {
 
     editBtn = new JButton();
     editBtn.setText("Edit Selected " + dataContext.substring(0, dataContext.length() - 1));
-    editBtn.setIcon(App.iconResizer(new ImageIcon("assets/edit-icon.png"), 18, 18));
+    editBtn.setIcon(Helper.iconResizer(new ImageIcon("assets/edit-icon.png"), 18, 18));
     editBtn.setForeground(Color.WHITE);
     editBtn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
     editBtn.setBackground(App.orange600);
@@ -188,11 +198,8 @@ public class ManageUsersPage extends JPanel {
     searchFilterActionRow.setBackground(App.slate100);
     searchFilterActionRow.add(searchFilterGroup);
     searchFilterActionRow.add(actionBtnsContainer, "push, align right");
-
-    String[] defaultRoleConditions = {"admin", "student", "lecturer", "academic"};
-    roleConditions = new ArrayList<>(Arrays.asList(defaultRoleConditions));
     
-    users = User.fetchUsers("", roleConditions);
+    users = User.fetchUsers(searchInput, roleConditions);
     userTableModel = new UserTableModel(users);
 
     rowCountLabel = new JLabel();
@@ -266,5 +273,7 @@ public class ManageUsersPage extends JPanel {
     this.add(header, "span, growx, wrap");
     this.add(nav, "growy");
     this.add(contentBody, "span, grow");
+
+    state.clearState();
   }
 }

@@ -9,6 +9,7 @@ import com.apu_afs.Views.App;
 import com.formdev.flatlaf.FlatLightLaf;
 
 public class Main {
+
     public static void main(String[] args) {
         try {
             // Flatlaf setup

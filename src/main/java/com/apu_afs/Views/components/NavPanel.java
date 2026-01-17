@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.apu_afs.GlobalState;
+import com.apu_afs.Helper;
 import com.apu_afs.Models.NavOption;
 import com.apu_afs.Views.App;
 import com.apu_afs.Views.Pages;
@@ -41,7 +42,7 @@ public class NavPanel extends JPanel {
       navDisplayGroup.setBackground(App.blue900);
 
       JLabel navIcon = new JLabel();
-      navIcon.setIcon(App.iconResizer(new ImageIcon(navOption.getIconSrc()), 24, 24));
+      navIcon.setIcon(Helper.iconResizer(new ImageIcon(navOption.getIconSrc()), 24, 24));
 
       JLabel navDisplayName = new JLabel(navOption.getDisplayName());
       navDisplayName.setForeground(Color.WHITE);

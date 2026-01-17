@@ -1,11 +1,16 @@
 package com.apu_afs.Models;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Lecturer extends User {
   
   public Lecturer(List<String> props) {
     super(props);
+  }
+
+  public Lecturer(HashMap<String, String> inputValues) {
+    super(inputValues);
   }
 
   @Override

@@ -10,7 +10,7 @@ public class IDIncrement {
   private Integer lecturerID;
   private Integer studentID;
 
-  private static final String filePath = "data/idIncrement.txt";
+  private static final String filePath = "data/idIncrements.txt";
 
   IDIncrement() {
     List<String> incrementIds = Data.fetch(filePath);
@@ -23,48 +23,33 @@ public class IDIncrement {
   }
 
   public Integer getUserID() {
-    return userID;
+    this.userID++;
+    saveIDIncrement();
+    return this.userID;
   }
 
   public Integer getAdminID() {
-    return adminID;
+    this.adminID++;
+    saveIDIncrement();
+    return this.adminID;
   }
 
   public Integer getAcademicID() {
-    return academicID;
+    this.academicID++;
+    saveIDIncrement();
+    return this.academicID;
   }
 
   public Integer getLecturerID() {
-    return lecturerID;
+    this.lecturerID++;
+    saveIDIncrement();
+    return this.lecturerID;
   }
 
   public Integer getStudentID() {
-    return studentID;
-  }
-
-  public void incrementUserID() {
-    this.userID = userID++;
+    this.studentID++;
     saveIDIncrement();
-  }
-
-  public void incrementAdminID() {
-    this.adminID = adminID++;
-    saveIDIncrement();
-  }
-
-  public void incrementAcademicID() {
-    this.academicID = academicID++;
-    saveIDIncrement();
-  }
-
-  public void incrementLecturerID() {
-    this.lecturerID = lecturerID++;
-    saveIDIncrement();
-  }
-
-  public void incrementStudentID() {
-    this.studentID = studentID++;
-    saveIDIncrement();
+    return this.studentID;
   }
 
   private void saveIDIncrement() {

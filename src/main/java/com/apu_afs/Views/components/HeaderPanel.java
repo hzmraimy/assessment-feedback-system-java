@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.apu_afs.GlobalState;
+import com.apu_afs.Helper;
 import com.apu_afs.Views.App;
 import com.apu_afs.Views.Router;
 
@@ -43,7 +44,7 @@ public class HeaderPanel extends JPanel {
 
     headerImageLabel = new JLabel();
     headerImageLabel.setBackground(App.slate100);
-    headerImageLabel.setIcon(App.iconResizer(new ImageIcon("assets/apu-icon.png"), 64, 64));
+    headerImageLabel.setIcon(Helper.iconResizer(new ImageIcon("assets/apu-icon.png"), 64, 64));
     
     titleAssessmentLabel = new JLabel();
     titleAssessmentLabel.setText("Assessment");
@@ -73,7 +74,7 @@ public class HeaderPanel extends JPanel {
     headerTitleSection.add(currPageLabel);
 
     profileImageLabel = new JLabel();
-    profileImageLabel.setIcon(App.iconResizer(new ImageIcon("assets/header-profile-icon.png"), 24, 24));
+    profileImageLabel.setIcon(Helper.iconResizer(new ImageIcon("assets/header-profile-icon.png"), 24, 24));
     
     profileUsernameLabel = new JLabel();
     profileUsernameLabel.setText(state.getCurrUser().getUsername());
@@ -88,14 +89,14 @@ public class HeaderPanel extends JPanel {
     profileRoleLabel = new JLabel();
     profileRoleLabel.setLayout(new MigLayout("insets 0"));
     profileRoleLabel.setText(
-      state.getCurrUser().getFirstName() + " " + state.getCurrUser().getLastName() + ", " + state.getCurrUser().getRole().substring(0, 1).toUpperCase() + state.getCurrUser().getRole().substring(1)
+      state.getCurrUser().getFirstName() + " " + state.getCurrUser().getLastName() + ", " + Helper.firstLetterUpperCase(state.getCurrUser().getRole())
     );
     profileRoleLabel.setForeground(App.slate100);
     profileRoleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
     
     editProfileBtn = new JButton();
     editProfileBtn.setText("Edit Profile");
-    editProfileBtn.setIcon(App.iconResizer(new ImageIcon("assets/header-edit-profile.png"), 18, 18));
+    editProfileBtn.setIcon(Helper.iconResizer(new ImageIcon("assets/header-edit-profile.png"), 18, 18));
     editProfileBtn.setBackground(App.slate100);
     editProfileBtn.setForeground(App.slate900);
     editProfileBtn.setBorder(BorderFactory.createCompoundBorder(editProfileBtn.getBorder(), BorderFactory.createEmptyBorder(5, 6, 5, 6)));

@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.apu_afs.GlobalState;
+import com.apu_afs.Helper;
 import com.apu_afs.Models.User;
 import com.apu_afs.Views.components.PasswordField;
 import com.apu_afs.Views.components.TextField;
@@ -70,7 +71,7 @@ public class LoginPage extends JPanel {
     imageContainer.add(imageLabel);
 
     formHeaderImageLabel = new JLabel();
-    formHeaderImageLabel.setIcon(App.iconResizer(new ImageIcon(App.icoPath), 64, 64));
+    formHeaderImageLabel.setIcon(Helper.iconResizer(new ImageIcon(App.icoPath), 64, 64));
 
     titleAssessmentLabel = new JLabel();
     titleAssessmentLabel.setText("Assessment");

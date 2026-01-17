@@ -2,10 +2,12 @@ package com.apu_afs.TableModels;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.apu_afs.Helper;
 import com.apu_afs.Models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserTableModel extends AbstractTableModel {
     private List<User> users;
@@ -15,7 +17,13 @@ public class UserTableModel extends AbstractTableModel {
     };
 
     public UserTableModel(List<User> users) {
-        this.users = users != null ? users : new ArrayList<>();
+        this.users = users != null ?
+        users.stream()
+            .sorted((currUser, nextUser) -> Integer.compare(
+                Integer.parseInt(currUser.getID()), Integer.parseInt(nextUser.getID())
+            ))
+            .collect(Collectors.toList()) 
+        : new ArrayList<>();
     }
 
     @Override
@@ -42,10 +50,10 @@ public class UserTableModel extends AbstractTableModel {
             case 2: return user.getPassword();
             case 3: return user.getFirstName();
             case 4: return user.getLastName();
-            case 5: return user.getGender() == 'm' ? "Male" : "Female";
+            case 5: return User.genderOptions.get(user.getGender());
             case 6: return user.getEmail();
             case 7: return user.getPhoneNumber();
-            case 8: return user.getRole();
+            case 8: return User.roleOptions.get(user.getRole());
             default: return null;
         }
     }
@@ -63,7 +71,13 @@ public class UserTableModel extends AbstractTableModel {
     }
 
     public void setUsers(List<User> users) {
-        this.users = users != null ? users : new ArrayList<>();
+       this.users = users != null ?
+        users.stream()
+            .sorted((currUser, nextUser) -> Integer.compare(
+                Integer.parseInt(currUser.getID()), Integer.parseInt(nextUser.getID())
+            ))
+            .collect(Collectors.toList()) 
+        : new ArrayList<>();
         fireTableDataChanged();
     }
 
